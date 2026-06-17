@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { ProductCard } from "../components/product/ProductCard";
+import { assets } from "../config/assets";
 import { business } from "../config/business";
 import { brands } from "../data/brands";
 import { getLatestProducts } from "../data/productQueries";
@@ -17,6 +18,7 @@ export function HomePage() {
           />
         </div>
         <div className="hero-copy">
+          <img className="hero-logo" src={assets.logo} alt={business.name} />
           <p className="eyebrow">Puerto Rico sneaker catalog</p>
           <h1>{business.name}</h1>
           <p>

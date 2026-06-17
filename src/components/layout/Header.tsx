@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { assets } from "../../config/assets";
 import { business } from "../../config/business";
 
 const navItems = [
@@ -16,7 +17,7 @@ export function Header() {
   return (
     <header className="site-header">
       <NavLink className="brand-mark" to="/" onClick={() => setIsOpen(false)}>
-        <span className="brand-frog" aria-hidden="true" />
+        <img className="brand-logo" src={assets.logo} alt="" aria-hidden="true" />
         <span>{business.name}</span>
       </NavLink>
 
