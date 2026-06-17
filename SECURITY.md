@@ -28,3 +28,10 @@ Cuando se conecte Supabase, el admin debe cumplir:
 
 GitHub Pages servira el frontend estatico. No debe guardar credenciales ni
 secretos. El dominio propio debe configurarse con HTTPS.
+
+## Dependencias
+
+- Ejecutar `npm audit` antes de publicar.
+- No usar `npm audit fix --force` sin revisar cambios mayores.
+- Los overrides de dependencias deben justificarse por seguridad y validarse
+  con `npm run build`.
