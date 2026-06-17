@@ -687,6 +687,27 @@ p {
   min-height: 72svh;
 }
 
+.admin-login {
+  display: grid;
+  gap: 12px;
+  max-width: 420px;
+}
+
+.admin-login input {
+  min-height: 46px;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius);
+  padding: 0 13px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.admin-login p {
+  margin: 0;
+  color: var(--color-muted);
+}
+
 .admin-form {
   display: grid;
   gap: 12px;
@@ -744,6 +765,29 @@ p {
 .admin-form textarea:focus {
   border-color: rgba(88, 211, 107, 0.75);
   outline: none;
+}
+
+.admin-form button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.admin-check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.admin-check input {
+  width: 18px;
+  height: 18px;
+  min-height: 18px;
+}
+
+.admin-message {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--color-muted);
 }
 
 .admin-actions {

@@ -7,6 +7,7 @@ export type ProductDraft = {
   price: string;
   sizes: string;
   description: string;
-  images: string;
+  images: string[];
   status: ProductStatus;
+  isPublished: boolean;
 };

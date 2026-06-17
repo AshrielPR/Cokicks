@@ -20,7 +20,7 @@ npm run preview
 - `/producto/:slug`
 - `/politicas`
 - `/contacto`
-- `/admin`
+- `/admin` solo en desarrollo local o con `VITE_ENABLE_ADMIN=true`
 
 ## Datos
 

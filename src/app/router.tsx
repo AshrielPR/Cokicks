@@ -1,6 +1,6 @@
+import { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import { AppLayout } from "../components/layout/AppLayout";
-import { AdminPage } from "../pages/AdminPage";
 import { CatalogPage } from "../pages/CatalogPage";
 import { ContactPage } from "../pages/ContactPage";
 import { HomePage } from "../pages/HomePage";
@@ -8,6 +8,10 @@ import { BrandsPage } from "../pages/BrandsPage";
 import { NotFoundPage } from "../pages/NotFoundPage";
 import { PoliciesPage } from "../pages/PoliciesPage";
 import { ProductPage } from "../pages/ProductPage";
+
+const AdminPage = lazy(() =>
+  import("../pages/AdminPage").then((module) => ({ default: module.AdminPage })),
+);
 
 const publicRoutes = [
   { index: true, element: <HomePage /> },
@@ -19,7 +23,17 @@ const publicRoutes = [
 ];
 
 const developmentRoutes = import.meta.env.DEV
-  ? [{ path: "admin", element: <AdminPage /> }]
+  || import.meta.env.VITE_ENABLE_ADMIN === "true"
+  ? [
+      {
+        path: "admin",
+        element: (
+          <Suspense fallback={<section className="page-section compact-page">Cargando</section>}>
+            <AdminPage />
+          </Suspense>
+        ),
+      },
+    ]
   : [];
 
 export const router = createBrowserRouter(

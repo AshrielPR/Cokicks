@@ -10,6 +10,7 @@ login, panel administrativo real ni escritura desde el navegador.
 - Cambios de contacto o inventario requieren editar el codigo y desplegar una
   nueva version.
 - La ruta `/admin` solo existe en desarrollo local mediante `import.meta.env.DEV`.
+- En produccion, `/admin` solo se registra si `VITE_ENABLE_ADMIN=true`.
 - No se debe publicar un admin funcional sin autenticacion real.
 
 ## Futuro Supabase
