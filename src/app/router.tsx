@@ -9,21 +9,26 @@ import { NotFoundPage } from "../pages/NotFoundPage";
 import { PoliciesPage } from "../pages/PoliciesPage";
 import { ProductPage } from "../pages/ProductPage";
 
+const publicRoutes = [
+  { index: true, element: <HomePage /> },
+  { path: "catalogo", element: <CatalogPage /> },
+  { path: "marcas", element: <BrandsPage /> },
+  { path: "producto/:slug", element: <ProductPage /> },
+  { path: "politicas", element: <PoliciesPage /> },
+  { path: "contacto", element: <ContactPage /> },
+];
+
+const developmentRoutes = import.meta.env.DEV
+  ? [{ path: "admin", element: <AdminPage /> }]
+  : [];
+
 export const router = createBrowserRouter(
   [
     {
       path: "/",
       element: <AppLayout />,
       errorElement: <NotFoundPage />,
-      children: [
-        { index: true, element: <HomePage /> },
-        { path: "catalogo", element: <CatalogPage /> },
-        { path: "marcas", element: <BrandsPage /> },
-        { path: "producto/:slug", element: <ProductPage /> },
-        { path: "politicas", element: <PoliciesPage /> },
-        { path: "contacto", element: <ContactPage /> },
-        { path: "admin", element: <AdminPage /> },
-      ],
+      children: [...publicRoutes, ...developmentRoutes],
     },
   ],
   {

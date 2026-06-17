@@ -688,6 +688,22 @@ p {
   gap: 12px;
 }
 
+.security-note {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 18px;
+  padding: 16px;
+  border: 1px solid rgba(88, 211, 107, 0.45);
+  border-radius: var(--radius);
+  background: rgba(88, 211, 107, 0.08);
+}
+
+.security-note p {
+  margin: 0;
+  color: var(--color-muted);
+  line-height: 1.55;
+}
+
 .admin-form label {
   display: grid;
   gap: 8px;
