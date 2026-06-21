@@ -34,6 +34,12 @@ jobs:
         run: npm run build
         env:
           VITE_BASE_PATH: /Cokicks/
+          # These values become part of the public frontend bundle. Never put a
+          # Supabase service_role key or any other private secret here.
+          VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ vars.VITE_SUPABASE_ANON_KEY }}
+          VITE_ADMIN_EMAIL: ${{ vars.VITE_ADMIN_EMAIL }}
+          VITE_ENABLE_ADMIN: ${{ vars.VITE_ENABLE_ADMIN }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
