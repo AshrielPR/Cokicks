@@ -626,6 +626,66 @@ p {
   align-content: center;
 }
 
+.policies-page {
+  max-width: 980px;
+}
+
+.policies-heading {
+  margin-bottom: 42px;
+}
+
+.policies-content {
+  border-top: 1px solid var(--color-line);
+}
+
+.policy-section {
+  display: grid;
+  gap: 14px;
+  padding: 28px 0;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.policy-section h2 {
+  margin: 0;
+  font-size: 1.45rem;
+  line-height: 1.1;
+}
+
+.policy-section p,
+.policy-section li {
+  color: var(--color-muted);
+  line-height: 1.65;
+}
+
+.policy-section p:last-child,
+.policy-section ul:last-child,
+.policy-section ol:last-child {
+  margin-bottom: 0;
+}
+
+.policy-section ul,
+.policy-section ol {
+  display: grid;
+  gap: 8px;
+  margin: 14px 0;
+  padding-left: 22px;
+}
+
+.policy-contact-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+}
+
+.policy-contact-links a {
+  color: var(--color-text);
+  font-weight: 800;
+}
+
+.policy-contact-links a:hover {
+  color: var(--color-accent);
+}
+
 .contact-actions {
   display: flex;
   flex-wrap: wrap;
