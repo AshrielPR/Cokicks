@@ -1,7 +1,7 @@
 # CoKicks Security Model
 
-CoKicks empieza como un catalogo estatico. En esta fase no hay base de datos,
-login, panel administrativo real ni escritura desde el navegador.
+CoKicks usa Supabase Auth y Row Level Security para proteger el panel
+administrativo y las operaciones de escritura.
 
 ## Reglas
 
@@ -9,16 +9,16 @@ login, panel administrativo real ni escritura desde el navegador.
 - Los productos temporales viven en `src/data/products.ts`.
 - Cambios de contacto o inventario requieren editar el codigo y desplegar una
   nueva version.
-- La ruta `/admin` solo existe en desarrollo local mediante `import.meta.env.DEV`.
 - En produccion, `/admin` solo se registra si `VITE_ENABLE_ADMIN=true`.
-- No se debe publicar un admin funcional sin autenticacion real.
+- La ruta `/admin` no revela datos privados y requiere autenticacion para crear,
+  editar o eliminar listings.
 
 ## Futuro Supabase
 
 Cuando se conecte Supabase, el admin debe cumplir:
 
 - Supabase Auth obligatorio.
-- Solo emails autorizados pueden entrar al panel.
+- Solo usuarios incluidos en `admin_users` pueden administrar listings.
 - Row Level Security activado en todas las tablas.
 - Policies que permitan escritura solo a administradores.
 - Storage privado o con policies estrictas para subir fotos.

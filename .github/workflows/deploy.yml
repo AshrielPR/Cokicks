@@ -38,7 +38,6 @@ jobs:
           # Supabase service_role key or any other private secret here.
           VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ vars.VITE_SUPABASE_ANON_KEY }}
-          VITE_ADMIN_EMAIL: ${{ vars.VITE_ADMIN_EMAIL }}
           VITE_ENABLE_ADMIN: ${{ vars.VITE_ENABLE_ADMIN }}
 
       - name: Upload artifact

@@ -9,12 +9,15 @@ Copia `.env.example` a `.env.local` y llena:
 ```txt
 VITE_SUPABASE_URL=
 VITE_SUPABASE_ANON_KEY=
-VITE_ADMIN_EMAIL=
 VITE_ENABLE_ADMIN=true
 ```
 
 `VITE_SUPABASE_ANON_KEY` puede estar en el frontend. La seguridad real vive en
 Row Level Security y policies.
+
+No incluyas emails personales en variables `VITE_*`: esas variables se
+incorporan al JavaScript publico del sitio. El rol autorizado se determina en
+la tabla privada `admin_users` mediante las reglas de Supabase.
 
 ## SQL
 
