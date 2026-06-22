@@ -28,8 +28,8 @@ export function ProductDraftForm() {
       return;
     }
 
-    if (!draft.name.trim() || !draft.price.trim()) {
-      setMessage("Nombre y precio son requeridos.");
+    if (!draft.name.trim() || !draft.price.trim() || !files?.length) {
+      setMessage("Nombre, precio y al menos una foto son requeridos.");
       return;
     }
 

@@ -2,12 +2,14 @@ import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { ProductCard } from "../components/product/ProductCard";
 import { brands } from "../data/brands";
-import { filterProducts } from "../data/productQueries";
+import { filterProductList } from "../data/productQueries";
+import { usePublishedProducts } from "../hooks/usePublishedProducts";
 import type { ProductStatus } from "../types/product";
 
 type StatusFilter = "all" | ProductStatus;
 
 export function CatalogPage() {
+  const { error, isLoading, products } = usePublishedProducts();
   const [searchParams, setSearchParams] = useSearchParams();
   const brandParam = searchParams.get("brand");
   const initialBrand = brands.some((brand) => brand === brandParam) ? brandParam : "Todos";
@@ -16,12 +18,12 @@ export function CatalogPage() {
   const [query, setQuery] = useState("");
 
   const filteredProducts = useMemo(() => {
-    return filterProducts({
+    return filterProductList(products, {
       brand: selectedBrand,
       query,
       status: selectedStatus,
     });
-  }, [query, selectedBrand, selectedStatus]);
+  }, [products, query, selectedBrand, selectedStatus]);
 
   function selectBrand(brand: string) {
     setSelectedBrand(brand);
@@ -102,7 +104,7 @@ export function CatalogPage() {
       </div>
 
       <div className="catalog-meta">
-        <span>{filteredProducts.length} listings</span>
+        <span>{isLoading ? "Cargando" : `${filteredProducts.length} listings`}</span>
         <span>Venta por WhatsApp</span>
       </div>
 
@@ -112,7 +114,11 @@ export function CatalogPage() {
         ))}
       </div>
 
-      {filteredProducts.length === 0 ? (
+      {isLoading ? <div className="empty-state"><p>Cargando catalogo.</p></div> : null}
+
+      {error ? <div className="empty-state"><p>{error}</p></div> : null}
+
+      {!isLoading && !error && filteredProducts.length === 0 ? (
         <div className="empty-state">
           <p>No hay pares con esos filtros.</p>
           <button

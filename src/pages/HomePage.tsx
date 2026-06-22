@@ -3,11 +3,13 @@ import { ProductCard } from "../components/product/ProductCard";
 import { assets } from "../config/assets";
 import { business } from "../config/business";
 import { brands } from "../data/brands";
-import { getLatestProducts } from "../data/productQueries";
-
-const latestProducts = getLatestProducts(3);
+import { getLatestProductList } from "../data/productQueries";
+import { usePublishedProducts } from "../hooks/usePublishedProducts";
 
 export function HomePage() {
+  const { isLoading, products } = usePublishedProducts();
+  const latestProducts = getLatestProductList(products, 3);
+
   return (
     <>
       <section className="hero-section">
@@ -57,6 +59,10 @@ export function HomePage() {
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
+        {isLoading ? <p className="section-intro">Cargando nuevos pares.</p> : null}
+        {!isLoading && latestProducts.length === 0 ? (
+          <p className="section-intro">Nuevos listings muy pronto.</p>
+        ) : null}
       </section>
 
       <section className="section-block brand-preview">

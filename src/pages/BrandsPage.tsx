@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { brands } from "../data/brands";
-import { getBrandProductCount } from "../data/productQueries";
+import { usePublishedProducts } from "../hooks/usePublishedProducts";
 
 export function BrandsPage() {
+  const { isLoading, products } = usePublishedProducts();
+
   return (
     <section className="page-section">
       <div className="section-heading">
@@ -16,12 +18,14 @@ export function BrandsPage() {
 
       <div className="brand-grid">
         {brands.map((brand) => {
-          const count = getBrandProductCount(brand);
+          const count = products.filter((product) => product.brand === brand).length;
 
           return (
             <Link className="brand-card" key={brand} to={`/catalogo?brand=${encodeURIComponent(brand)}`}>
               <span>{brand}</span>
-              <small>{count === 1 ? "1 listing" : `${count} listings`}</small>
+              <small>
+                {isLoading ? "Cargando" : count === 1 ? "1 listing" : `${count} listings`}
+              </small>
             </Link>
           );
         })}

@@ -8,7 +8,11 @@ export type ProductFilters = {
 };
 
 export function getLatestProducts(limit = 3) {
-  return [...products]
+  return getLatestProductList(products, limit);
+}
+
+export function getLatestProductList(productList: Product[], limit = 3) {
+  return [...productList]
     .sort((a, b) => b.addedAt.localeCompare(a.addedAt))
     .slice(0, limit);
 }
@@ -22,10 +26,17 @@ export function getBrandProductCount(brand: string) {
 }
 
 export function filterProducts({ brand, query = "", status = "all" }: ProductFilters) {
+  return filterProductList(products, { brand, query, status });
+}
+
+export function filterProductList(
+  productList: Product[],
+  { brand, query = "", status = "all" }: ProductFilters,
+) {
   const selectedBrand = brand ?? "Todos";
   const normalizedQuery = query.trim().toLowerCase();
 
-  return products.filter((product) => {
+  return productList.filter((product) => {
     const matchesBrand =
       selectedBrand === "Todos" || product.brand === selectedBrand;
     const matchesStatus = status === "all" || product.status === status;

@@ -1,13 +1,46 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getProductBySlug } from "../data/productQueries";
 import type { Product } from "../types/product";
 import { formatPrice } from "../utils/format";
 import { getProductWhatsappUrl } from "../utils/whatsapp";
 
 export function ProductPage() {
   const { slug } = useParams();
-  const product = getProductBySlug(slug);
+  const [product, setProduct] = useState<Product | undefined>();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    setIsLoading(true);
+    import("../data/productRepository")
+      .then(({ getPublishedProductBySlug }) => getPublishedProductBySlug(slug))
+      .then((result) => {
+        if (isMounted) {
+          setProduct(result);
+          setIsLoading(false);
+        }
+      })
+      .catch(() => {
+        if (isMounted) {
+          setProduct(undefined);
+          setIsLoading(false);
+        }
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [slug]);
+
+  if (isLoading) {
+    return (
+      <section className="page-section compact-page">
+        <p className="eyebrow">Catalogo</p>
+        <h1>Cargando listing.</h1>
+      </section>
+    );
+  }
 
   if (!product) {
     return (
@@ -26,6 +59,10 @@ export function ProductPage() {
 
 function ProductDetails({ product }: { product: Product }) {
   const [selectedImage, setSelectedImage] = useState(product.images[0]);
+
+  useEffect(() => {
+    setSelectedImage(product.images[0]);
+  }, [product]);
 
   return (
     <section className="product-detail">
