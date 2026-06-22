@@ -1,95 +1,186 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { brands } from "../../data/brands";
 import { createSlug } from "../../lib/slug";
+import { getProductImagePath } from "../../lib/productImages";
 import { supabase } from "../../lib/supabase";
-import type { ProductDraft } from "../../types/admin";
+import type { ManagedProduct, ProductDraft } from "../../types/admin";
 
-const initialDraft: ProductDraft = {
+const emptyDraft: ProductDraft = {
   name: "",
   brand: brands[0],
   model: "",
   price: "",
   sizes: "",
   description: "",
-  images: [],
-  status: "available",
   isPublished: true,
 };
 
-export function ProductDraftForm() {
-  const [draft, setDraft] = useState<ProductDraft>(initialDraft);
+type ProductDraftFormProps = {
+  listing?: ManagedProduct;
+  onCancel?: () => void;
+  onSaved: () => void;
+};
+
+function toDraft(listing?: ManagedProduct): ProductDraft {
+  if (!listing) {
+    return emptyDraft;
+  }
+
+  return {
+    name: listing.name,
+    brand: listing.brand,
+    model: listing.model,
+    price: String(listing.price),
+    sizes: listing.sizes.join(", "),
+    description: listing.description,
+    isPublished: listing.is_published,
+  };
+}
+
+export function ProductDraftForm({ listing, onCancel, onSaved }: ProductDraftFormProps) {
+  const [draft, setDraft] = useState<ProductDraft>(() => toDraft(listing));
+  const [existingImages, setExistingImages] = useState<string[]>(listing?.images ?? []);
   const [files, setFiles] = useState<FileList | null>(null);
   const [message, setMessage] = useState("");
   const [isSaving, setIsSaving] = useState(false);
+  const isEditing = Boolean(listing);
 
-  async function handleSave() {
+  useEffect(() => {
+    setDraft(toDraft(listing));
+    setExistingImages(listing?.images ?? []);
+    setFiles(null);
+    setMessage("");
+  }, [listing]);
+
+  function resetForm() {
+    setDraft(emptyDraft);
+    setExistingImages([]);
+    setFiles(null);
+    setMessage("");
+  }
+
+  async function uploadImages() {
+    if (!supabase || !files?.length) {
+      return [];
+    }
+
+    const uploadedImages: string[] = [];
+
+    try {
+      for (const file of Array.from(files)) {
+        const extension = file.name.split(".").pop() ?? "jpg";
+        const path = `${createSlug(draft.name)}/${crypto.randomUUID()}.${extension}`;
+        const { error } = await supabase.storage
+          .from("product-images")
+          .upload(path, file, { upsert: false });
+
+        if (error) {
+          throw error;
+        }
+
+        const { data } = supabase.storage.from("product-images").getPublicUrl(path);
+        uploadedImages.push(data.publicUrl);
+      }
+    } catch (error) {
+      const uploadedPaths = uploadedImages
+        .map(getProductImagePath)
+        .filter((path): path is string => Boolean(path));
+
+      if (uploadedPaths.length) {
+        await supabase.storage.from("product-images").remove(uploadedPaths);
+      }
+
+      throw error;
+    }
+
+    return uploadedImages;
+  }
+
+  async function handleSave(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
     if (!supabase) {
       setMessage("Supabase no esta configurado.");
       return;
     }
 
-    if (!draft.name.trim() || !draft.price.trim() || !files?.length) {
-      setMessage("Nombre, precio y al menos una foto son requeridos.");
+    const price = Number(draft.price);
+    const hasNewImages = Boolean(files?.length);
+
+    if (!draft.name.trim() || !Number.isFinite(price) || price < 0 || (!existingImages.length && !hasNewImages)) {
+      setMessage("Nombre, precio valido y al menos una foto son requeridos.");
       return;
     }
 
     setIsSaving(true);
     setMessage("");
-
-    const uploadedImages: string[] = [];
+    let uploadedImages: string[] = [];
 
     try {
-      if (files) {
-        for (const file of Array.from(files)) {
-          const extension = file.name.split(".").pop() ?? "jpg";
-          const path = `${createSlug(draft.name)}/${crypto.randomUUID()}.${extension}`;
-          const { error } = await supabase.storage
-            .from("product-images")
-            .upload(path, file, { upsert: false });
-
-          if (error) {
-            throw error;
-          }
-
-          const { data } = supabase.storage.from("product-images").getPublicUrl(path);
-          uploadedImages.push(data.publicUrl);
-        }
-      }
-
+      uploadedImages = await uploadImages();
+      const images = [...existingImages, ...uploadedImages];
       const sizes = draft.sizes
         .split(",")
         .map((size) => size.trim())
         .filter(Boolean);
-
-      const { error } = await supabase.from("products").insert({
+      const values = {
         slug: createSlug(draft.name),
         name: draft.name.trim(),
         brand: draft.brand,
         model: draft.model.trim(),
-        price: Number(draft.price),
+        price,
         sizes,
         description: draft.description.trim(),
-        images: uploadedImages,
-        status: draft.status,
+        images,
+        status: "available" as const,
         is_published: draft.isPublished,
-      });
+      };
+
+      const { error } = listing
+        ? await supabase.from("products").update(values).eq("id", listing.id)
+        : await supabase.from("products").insert(values);
 
       if (error) {
         throw error;
       }
 
-      setDraft(initialDraft);
-      setFiles(null);
-      setMessage("Listing guardado.");
+      const removedPaths = (listing?.images ?? [])
+        .filter((image) => !existingImages.includes(image))
+        .map(getProductImagePath)
+        .filter((path): path is string => Boolean(path));
+
+      if (removedPaths.length) {
+        await supabase.storage.from("product-images").remove(removedPaths);
+      }
+
+      if (isEditing) {
+        onSaved();
+      } else {
+        resetForm();
+        onSaved();
+      }
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : "No se pudo guardar.");
+      const uploadedPaths = uploadedImages
+        .map(getProductImagePath)
+        .filter((path): path is string => Boolean(path));
+
+      if (uploadedPaths.length) {
+        await supabase.storage.from("product-images").remove(uploadedPaths);
+      }
+
+      const code = typeof error === "object" && error && "code" in error ? error.code : "";
+      setMessage(
+        code === "23505"
+          ? "Ya existe un listing con ese nombre. Cambia el nombre para continuar."
+          : "No se pudo guardar el listing. Intenta de nuevo.",
+      );
     } finally {
       setIsSaving(false);
     }
   }
 
   return (
-    <form className="admin-form">
+    <form className="admin-form" onSubmit={handleSave}>
       <label>
         <span>Nombre</span>
         <input
@@ -120,13 +211,13 @@ export function ProductDraftForm() {
       <label>
         <span>Precio</span>
         <input
-          inputMode="numeric"
+          inputMode="decimal"
           placeholder="285"
           value={draft.price}
           onChange={(event) => setDraft({ ...draft, price: event.target.value })}
         />
       </label>
-      <label>
+      <label className="admin-wide">
         <span>Sizes</span>
         <input
           placeholder="8, 9.5, 10"
@@ -134,20 +225,28 @@ export function ProductDraftForm() {
           onChange={(event) => setDraft({ ...draft, sizes: event.target.value })}
         />
       </label>
-      <label>
-        <span>Estado</span>
-        <select
-          value={draft.status}
-          onChange={(event) =>
-            setDraft({ ...draft, status: event.target.value as ProductDraft["status"] })
-          }
-        >
-          <option value="available">Disponible</option>
-          <option value="sold">Vendido</option>
-        </select>
-      </label>
+      {existingImages.length ? (
+        <div className="admin-wide image-manager">
+          <span>Fotos actuales</span>
+          <div className="admin-image-grid">
+            {existingImages.map((image) => (
+              <div className="admin-image" key={image}>
+                <img src={image} alt="Foto actual del listing" />
+                <button
+                  aria-label="Quitar foto"
+                  className="image-remove"
+                  type="button"
+                  onClick={() => setExistingImages((images) => images.filter((item) => item !== image))}
+                >
+                  Quitar
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : null}
       <label className="admin-wide">
-        <span>Fotos</span>
+        <span>{isEditing ? "Añadir fotos" : "Fotos"}</span>
         <input
           accept="image/png,image/jpeg,image/webp"
           multiple
@@ -155,6 +254,7 @@ export function ProductDraftForm() {
           onChange={(event) => setFiles(event.target.files)}
         />
       </label>
+      {files?.length ? <p className="admin-file-count">{files.length} fotos listas para subir.</p> : null}
       <label className="admin-wide">
         <span>Descripcion</span>
         <textarea
@@ -169,29 +269,22 @@ export function ProductDraftForm() {
           type="checkbox"
           onChange={(event) => setDraft({ ...draft, isPublished: event.target.checked })}
         />
-        <span>Publicado en catalogo</span>
+        <span>Visible en catalogo</span>
       </label>
       {message ? <p className="admin-message">{message}</p> : null}
       <div className="admin-wide admin-actions">
-        <button
-          className="primary-action"
-          disabled={isSaving}
-          type="button"
-          onClick={handleSave}
-        >
-          {isSaving ? "Guardando" : "Publicar listing"}
+        <button className="primary-action" disabled={isSaving} type="submit">
+          {isSaving ? "Guardando" : isEditing ? "Guardar cambios" : "Crear listing"}
         </button>
-        <button
-          className="secondary-action"
-          type="button"
-          onClick={() => {
-            setDraft(initialDraft);
-            setFiles(null);
-            setMessage("");
-          }}
-        >
-          Limpiar
-        </button>
+        {isEditing && onCancel ? (
+          <button className="secondary-action" type="button" onClick={onCancel}>
+            Cancelar
+          </button>
+        ) : (
+          <button className="secondary-action" type="button" onClick={resetForm}>
+            Limpiar
+          </button>
+        )}
       </div>
     </form>
   );

@@ -17,7 +17,6 @@ function toProduct(row: ProductRow): Product {
     sizes: row.sizes,
     description: row.description,
     images: row.images,
-    status: row.status,
     addedAt: row.created_at,
   };
 }

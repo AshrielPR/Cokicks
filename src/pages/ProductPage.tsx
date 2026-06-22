@@ -87,9 +87,6 @@ function ProductDetails({ product }: { product: Product }) {
       </div>
 
       <aside className="product-info">
-        <span className={`status-pill ${product.status}`}>
-          {product.status === "available" ? "Disponible" : "Vendido"}
-        </span>
         <p className="eyebrow">{product.brand}</p>
         <h1>{product.name}</h1>
         <p className="model-name">{product.model}</p>
@@ -103,10 +100,6 @@ function ProductDetails({ product }: { product: Product }) {
             <span>Modelo</span>
             <strong>{product.model}</strong>
           </div>
-          <div>
-            <span>Estado</span>
-            <strong>{product.status === "available" ? "Disponible" : "Vendido"}</strong>
-          </div>
         </div>
         <div className="size-row">
           {product.sizes.map((size) => (
@@ -114,18 +107,14 @@ function ProductDetails({ product }: { product: Product }) {
           ))}
         </div>
         <p className="description">{product.description}</p>
-        {product.status === "available" ? (
-          <a
-            className="primary-action full-width product-cta"
-            href={getProductWhatsappUrl(product.name)}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Preguntar por WhatsApp
-          </a>
-        ) : (
-          <span className="disabled-action full-width">Este par esta vendido</span>
-        )}
+        <a
+          className="primary-action full-width product-cta"
+          href={getProductWhatsappUrl(product.name)}
+          target="_blank"
+          rel="noreferrer"
+        >
+          Preguntar por WhatsApp
+        </a>
       </aside>
     </section>
   );

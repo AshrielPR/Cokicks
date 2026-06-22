@@ -1,5 +1,3 @@
-export type ProductStatus = "available" | "sold";
-
 export type Product = {
   id: string;
   slug: string;
@@ -10,6 +8,5 @@ export type Product = {
   sizes: string[];
   description: string;
   images: string[];
-  status: ProductStatus;
   addedAt: string;
 };

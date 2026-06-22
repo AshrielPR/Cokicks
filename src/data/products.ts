@@ -15,7 +15,6 @@ export const products: Product[] = [
       "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?auto=format&fit=crop&w=1400&q=85",
       "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1400&q=85",
     ],
-    status: "available",
     addedAt: "2026-06-15",
   },
   {
@@ -32,7 +31,6 @@ export const products: Product[] = [
       "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=1400&q=85",
       "https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&w=1400&q=85",
     ],
-    status: "available",
     addedAt: "2026-06-14",
   },
   {
@@ -49,7 +47,6 @@ export const products: Product[] = [
       "https://images.unsplash.com/photo-1491553895911-0055eca6402d?auto=format&fit=crop&w=1400&q=85",
       "https://images.unsplash.com/photo-1465453869711-7e174808ace9?auto=format&fit=crop&w=1400&q=85",
     ],
-    status: "sold",
     addedAt: "2026-06-12",
   },
   {
@@ -66,7 +63,6 @@ export const products: Product[] = [
       "https://images.unsplash.com/photo-1560769629-975ec94e6a86?auto=format&fit=crop&w=1400&q=85",
       "https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?auto=format&fit=crop&w=1400&q=85",
     ],
-    status: "available",
     addedAt: "2026-06-10",
   },
 ];

@@ -1,10 +1,9 @@
-import type { Product, ProductStatus } from "../types/product";
+import type { Product } from "../types/product";
 import { products } from "./products";
 
 export type ProductFilters = {
   brand?: string;
   query?: string;
-  status?: "all" | ProductStatus;
 };
 
 export function getLatestProducts(limit = 3) {
@@ -25,13 +24,13 @@ export function getBrandProductCount(brand: string) {
   return products.filter((product) => product.brand === brand).length;
 }
 
-export function filterProducts({ brand, query = "", status = "all" }: ProductFilters) {
-  return filterProductList(products, { brand, query, status });
+export function filterProducts({ brand, query = "" }: ProductFilters) {
+  return filterProductList(products, { brand, query });
 }
 
 export function filterProductList(
   productList: Product[],
-  { brand, query = "", status = "all" }: ProductFilters,
+  { brand, query = "" }: ProductFilters,
 ) {
   const selectedBrand = brand ?? "Todos";
   const normalizedQuery = query.trim().toLowerCase();
@@ -39,11 +38,10 @@ export function filterProductList(
   return productList.filter((product) => {
     const matchesBrand =
       selectedBrand === "Todos" || product.brand === selectedBrand;
-    const matchesStatus = status === "all" || product.status === status;
     const matchesQuery =
       normalizedQuery.length === 0 || searchableProductText(product).includes(normalizedQuery);
 
-    return matchesBrand && matchesStatus && matchesQuery;
+    return matchesBrand && matchesQuery;
   });
 }
 

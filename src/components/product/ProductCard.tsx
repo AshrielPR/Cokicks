@@ -8,18 +8,12 @@ type ProductCardProps = {
 
 export function ProductCard({ product }: ProductCardProps) {
   return (
-    <Link
-      className={product.status === "sold" ? "product-card is-sold" : "product-card"}
-      to={`/producto/${product.slug}`}
-    >
-      <span className={`status-pill ${product.status}`}>
-        {product.status === "available" ? "Disponible" : "Vendido"}
-      </span>
+    <Link className="product-card" to={`/producto/${product.slug}`}>
       <img src={product.images[0]} alt={product.name} loading="lazy" />
       <div className="product-card-copy">
         <span>{product.brand}</span>
         <h3>{product.name}</h3>
-        <p>{product.status === "sold" ? "Vendido" : formatPrice(product.price)}</p>
+        <p>{formatPrice(product.price)}</p>
         <small>Sizes {product.sizes.join(", ")}</small>
       </div>
     </Link>

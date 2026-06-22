@@ -1,4 +1,6 @@
-import type { ProductStatus } from "./product";
+import type { Database } from "./database";
+
+export type ManagedProduct = Database["public"]["Tables"]["products"]["Row"];
 
 export type ProductDraft = {
   name: string;
@@ -7,7 +9,5 @@ export type ProductDraft = {
   price: string;
   sizes: string;
   description: string;
-  images: string[];
-  status: ProductStatus;
   isPublished: boolean;
 };

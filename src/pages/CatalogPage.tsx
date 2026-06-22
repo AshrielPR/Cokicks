@@ -4,9 +4,6 @@ import { ProductCard } from "../components/product/ProductCard";
 import { brands } from "../data/brands";
 import { filterProductList } from "../data/productQueries";
 import { usePublishedProducts } from "../hooks/usePublishedProducts";
-import type { ProductStatus } from "../types/product";
-
-type StatusFilter = "all" | ProductStatus;
 
 export function CatalogPage() {
   const { error, isLoading, products } = usePublishedProducts();
@@ -14,16 +11,14 @@ export function CatalogPage() {
   const brandParam = searchParams.get("brand");
   const initialBrand = brands.some((brand) => brand === brandParam) ? brandParam : "Todos";
   const [selectedBrand, setSelectedBrand] = useState(initialBrand ?? "Todos");
-  const [selectedStatus, setSelectedStatus] = useState<StatusFilter>("all");
   const [query, setQuery] = useState("");
 
   const filteredProducts = useMemo(() => {
     return filterProductList(products, {
       brand: selectedBrand,
       query,
-      status: selectedStatus,
     });
-  }, [products, query, selectedBrand, selectedStatus]);
+  }, [products, query, selectedBrand]);
 
   function selectBrand(brand: string) {
     setSelectedBrand(brand);
@@ -73,34 +68,6 @@ export function CatalogPage() {
           </div>
         </div>
 
-        <div className="filter-group">
-          <span>Estado</span>
-          <div className="filter-scroll compact">
-            <button
-              className={selectedStatus === "all" ? "filter-chip active" : "filter-chip"}
-              type="button"
-              onClick={() => setSelectedStatus("all")}
-            >
-              Todos
-            </button>
-            <button
-              className={
-                selectedStatus === "available" ? "filter-chip active" : "filter-chip"
-              }
-              type="button"
-              onClick={() => setSelectedStatus("available")}
-            >
-              Disponible
-            </button>
-            <button
-              className={selectedStatus === "sold" ? "filter-chip active" : "filter-chip"}
-              type="button"
-              onClick={() => setSelectedStatus("sold")}
-            >
-              Vendido
-            </button>
-          </div>
-        </div>
       </div>
 
       <div className="catalog-meta">
@@ -126,7 +93,6 @@ export function CatalogPage() {
             type="button"
             onClick={() => {
               selectBrand("Todos");
-              setSelectedStatus("all");
               setQuery("");
             }}
           >

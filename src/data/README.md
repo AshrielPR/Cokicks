@@ -14,7 +14,6 @@ migrar luego a Supabase sin cambiar las paginas principales.
 - `sizes`: sizes disponibles como texto.
 - `description`: descripcion corta.
 - `images`: URLs o rutas de imagenes.
-- `status`: `available` o `sold`.
 - `addedAt`: fecha ISO `YYYY-MM-DD`.
 
 ## Imagenes reales
