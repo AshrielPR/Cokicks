@@ -78,9 +78,11 @@ function ProductDetails({ product }: { product: Product }) {
               className={selectedImage === image ? "thumb-button active" : "thumb-button"}
               key={image}
               type="button"
+              aria-label={`Ver foto ${index + 1} de ${product.name}`}
+              aria-pressed={selectedImage === image}
               onClick={() => setSelectedImage(image)}
             >
-              <img src={image} alt={`${product.name} foto ${index + 1}`} />
+              <img src={image} alt="" />
             </button>
           ))}
         </div>

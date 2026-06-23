@@ -5,8 +5,11 @@ import { Header } from "./Header";
 export function AppLayout() {
   return (
     <div className="app-shell">
+      <a className="skip-link" href="#main-content">
+        Ir al contenido
+      </a>
       <Header />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <Outlet />
       </main>
       <Footer />

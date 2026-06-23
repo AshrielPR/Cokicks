@@ -25,14 +25,15 @@ export function Header() {
         className="menu-button"
         type="button"
         aria-label={isOpen ? "Cerrar menu" : "Abrir menu"}
+        aria-controls="site-navigation"
         aria-expanded={isOpen}
         onClick={() => setIsOpen((value) => !value)}
       >
-        <span />
-        <span />
+        <span aria-hidden="true" />
+        <span aria-hidden="true" />
       </button>
 
-      <nav className={isOpen ? "site-nav is-open" : "site-nav"}>
+      <nav id="site-navigation" className={isOpen ? "site-nav is-open" : "site-nav"}>
         {navItems.map((item) => (
           <NavLink key={item.to} to={item.to} onClick={() => setIsOpen(false)}>
             {item.label}
