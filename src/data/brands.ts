@@ -8,4 +8,9 @@ export const brands = [
   "Alexander McQueen",
   "Louis Vuitton",
   "Balenciaga",
+  "Maison Margiela",
+  "Bottega Veneta",
+  "Dior",
+  "On x LOEWE",
+  "Prada",
 ] as const;
