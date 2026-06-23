@@ -77,7 +77,7 @@ export function CatalogPage() {
 
       <div className="product-grid catalog-grid">
         {filteredProducts.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard key={product.id} product={product} rotateImages />
         ))}
       </div>
 

@@ -374,6 +374,20 @@ p {
   background: var(--color-surface-strong);
 }
 
+.product-card-image.is-rotating {
+  animation: product-image-in 360ms ease-out;
+}
+
+@keyframes product-image-in {
+  from {
+    opacity: 0.55;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 .product-card-copy {
   display: grid;
   align-content: start;
