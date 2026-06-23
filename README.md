@@ -24,13 +24,13 @@ npm run preview
 
 ## Datos
 
-Los listings temporales viven en `src/data/products.ts`.
+Los listings publicos se leen desde Supabase. No hay productos de ejemplo ni
+fotos stock incluidos en el proyecto.
 
-La capa `src/data/productQueries.ts` separa la lectura/filtrado de productos
-para facilitar una migracion futura a Supabase.
+El panel `/admin` permite subir fotos reales y administrar cada listing sin
+editar codigo.
 
 ## Assets reales
 
 - Logo: `public/brand/`
-- Productos: `public/products/`
-- Hero: `public/hero/`
+- Fotos de productos: Supabase Storage mediante `/admin`

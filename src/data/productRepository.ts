@@ -1,8 +1,6 @@
 import { isSupabaseConfigured, supabase } from "../lib/supabase";
 import type { Database } from "../types/database";
 import type { Product } from "../types/product";
-import { getProductBySlug } from "./productQueries";
-import { products } from "./products";
 
 type ProductRow = Database["public"]["Tables"]["products"]["Row"];
 
@@ -23,7 +21,7 @@ function toProduct(row: ProductRow): Product {
 
 export async function getPublishedProducts(): Promise<Product[]> {
   if (!isSupabaseConfigured || !supabase) {
-    return products;
+    return [];
   }
 
   const { data, error } = await supabase
@@ -47,7 +45,7 @@ export async function getPublishedProductBySlug(
   }
 
   if (!isSupabaseConfigured || !supabase) {
-    return getProductBySlug(slug);
+    return undefined;
   }
 
   const { data, error } = await supabase

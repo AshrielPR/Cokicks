@@ -6,22 +6,20 @@ administrativo y las operaciones de escritura.
 ## Reglas
 
 - La informacion de contacto vive en `src/config/business.ts`.
-- Los productos temporales viven en `src/data/products.ts`.
-- Cambios de contacto o inventario requieren editar el codigo y desplegar una
-  nueva version.
+- Los listings y sus fotos se gestionan desde Supabase mediante el panel
+  protegido `/admin`.
 - En produccion, `/admin` solo se registra si `VITE_ENABLE_ADMIN=true`.
 - La ruta `/admin` no revela datos privados y requiere autenticacion para crear,
   editar o eliminar listings.
 
-## Futuro Supabase
-
-Cuando se conecte Supabase, el admin debe cumplir:
+## Supabase
 
 - Supabase Auth obligatorio.
 - Solo usuarios incluidos en `admin_users` pueden administrar listings.
 - Row Level Security activado en todas las tablas.
 - Policies que permitan escritura solo a administradores.
-- Storage privado o con policies estrictas para subir fotos.
+- Las fotos de productos son publicas para que el catalogo pueda mostrarlas;
+  solo administradores autenticados pueden subir, editar o borrar archivos.
 - Ninguna clave secreta debe vivir en el frontend.
 - Variables publicas `VITE_*` solo pueden contener claves anon/public.
 

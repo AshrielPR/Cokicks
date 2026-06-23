@@ -13,12 +13,6 @@ export function HomePage() {
   return (
     <>
       <section className="hero-section">
-        <div className="hero-media">
-          <img
-            src="https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=1600&q=90"
-            alt="Sneakers premium en fondo oscuro"
-          />
-        </div>
         <div className="hero-copy">
           <img className="hero-logo" src={assets.logo} alt={business.name} />
           <p className="eyebrow">Puerto Rico sneaker catalog</p>

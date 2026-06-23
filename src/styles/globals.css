@@ -156,27 +156,6 @@ button {
   overflow: hidden;
 }
 
-.hero-media {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-}
-
-.hero-media::after {
-  position: absolute;
-  inset: 0;
-  content: "";
-  background:
-    linear-gradient(180deg, rgba(0, 0, 0, 0.2), #000 92%),
-    linear-gradient(90deg, #000 0%, rgba(0, 0, 0, 0.22) 70%);
-}
-
-.hero-media img {
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-}
-
 .hero-copy {
   max-width: 680px;
 }
