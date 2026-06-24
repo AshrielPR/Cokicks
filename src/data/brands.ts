@@ -9,6 +9,7 @@ export const brands = [
   "Louis Vuitton",
   "Balenciaga",
   "Maison Margiela",
+  "Maison Mihara Yasuhiro",
   "Bottega Veneta",
   "Dior",
   "On x LOEWE",
