@@ -94,10 +94,15 @@ export function AdminPage() {
       email: email.trim(),
       options: {
         emailRedirectTo: window.location.href,
+        shouldCreateUser: false,
       },
     });
 
-    setMessage(error ? error.message : "Revisa tu email para entrar.");
+    setMessage(
+      error
+        ? "No se pudo solicitar acceso."
+        : "Si el correo esta autorizado, recibira un enlace de acceso.",
+    );
   }
 
   async function toggleVisibility(listing: ManagedProduct) {

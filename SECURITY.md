@@ -8,6 +8,9 @@ administrativo y las operaciones de escritura.
 - La informacion de contacto vive en `src/config/business.ts`.
 - Los listings y sus fotos se gestionan desde Supabase mediante el panel
   protegido `/admin`.
+- Los magic links no crean usuarios nuevos desde la aplicacion. Los signups por
+  email deben permanecer desactivados en Supabase y solo el usuario autorizado
+  debe existir en `Authentication > Users`.
 - En produccion, `/admin` solo se registra si `VITE_ENABLE_ADMIN=true`.
 - La ruta `/admin` no revela datos privados y requiere autenticacion para crear,
   editar o eliminar listings.

@@ -39,6 +39,9 @@ values ('TU_USER_ID', 'TU_EMAIL');
 - Solo admins autenticados pueden crear, editar o eliminar productos.
 - Solo admins autenticados pueden subir, editar o eliminar fotos.
 - La ruta admin no debe confiar en esconder URLs; debe validar sesion y rol.
+- En `Authentication > Providers > Email`, desactiva `Allow new users to sign up`.
+- En `Authentication > Users`, conserva solo los usuarios que quieras permitir.
+  Para CoKicks, el unico usuario debe ser `alexsanzjr@gmail.com`.
 
 ## Activar admin en produccion
 
