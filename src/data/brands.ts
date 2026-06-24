@@ -12,5 +12,6 @@ export const brands = [
   "Bottega Veneta",
   "Dior",
   "On x LOEWE",
+  "Onitsuka Tiger",
   "Prada",
 ] as const;
