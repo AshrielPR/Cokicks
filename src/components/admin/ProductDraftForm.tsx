@@ -190,6 +190,34 @@ export function ProductDraftForm({ listing, onCancel, onSaved }: ProductDraftFor
     };
   }
 
+  async function getListingSlug() {
+    if (!supabase || listing) {
+      return listing?.slug ?? createSlug(draft.name);
+    }
+
+    const baseSlug = createSlug(draft.name) || "listing";
+    const { data, error } = await supabase
+      .from("products")
+      .select("slug")
+      .like("slug", `${baseSlug}%`);
+
+    if (error) {
+      throw error;
+    }
+
+    const usedSlugs = new Set(data.map((product) => product.slug));
+    if (!usedSlugs.has(baseSlug)) {
+      return baseSlug;
+    }
+
+    let suffix = 2;
+    while (usedSlugs.has(`${baseSlug}-${suffix}`)) {
+      suffix += 1;
+    }
+
+    return `${baseSlug}-${suffix}`;
+  }
+
   async function handleSave(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -210,6 +238,7 @@ export function ProductDraftForm({ listing, onCancel, onSaved }: ProductDraftFor
     let uploadedImages: string[] = [];
 
     try {
+      const slug = await getListingSlug();
       const imageUpload = await uploadImages();
       uploadedImages = imageUpload.uploadedImages;
       const sizes = draft.sizes
@@ -217,7 +246,7 @@ export function ProductDraftForm({ listing, onCancel, onSaved }: ProductDraftFor
         .map((size) => size.trim())
         .filter(Boolean);
       const values = {
-        slug: createSlug(draft.name),
+        slug,
         name: draft.name.trim(),
         brand: draft.brand,
         model: draft.model.trim(),
@@ -266,12 +295,7 @@ export function ProductDraftForm({ listing, onCancel, onSaved }: ProductDraftFor
         await supabase.storage.from("product-images").remove(uploadedPaths);
       }
 
-      const code = typeof error === "object" && error && "code" in error ? error.code : "";
-      setMessage(
-        code === "23505"
-          ? "Ya existe un listing con ese nombre. Cambia el nombre para continuar."
-          : "No se pudo guardar el listing. Intenta de nuevo.",
-      );
+      setMessage("No se pudo guardar el listing. Intenta de nuevo.");
     } finally {
       setIsSaving(false);
     }
