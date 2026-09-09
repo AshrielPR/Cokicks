@@ -6,9 +6,9 @@ import { useWishlist } from "../../context/WishlistContext";
 
 const navItems = [
   { label: "Inicio", to: "/" },
-  { label: "Catalogo", to: "/catalogo" },
+  { label: "Catálogo", to: "/catalogo" },
   { label: "Marcas", to: "/marcas" },
-  { label: "Politicas", to: "/politicas" },
+  { label: "Políticas", to: "/politicas" },
   { label: "Contacto", to: "/contacto" },
 ];
 
@@ -26,7 +26,7 @@ export function Header() {
       <button
         className="menu-button"
         type="button"
-        aria-label={isOpen ? "Cerrar menu" : "Abrir menu"}
+        aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
         aria-controls="site-navigation"
         aria-expanded={isOpen}
         onClick={() => setIsOpen((value) => !value)}

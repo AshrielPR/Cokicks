@@ -33,7 +33,7 @@ export function CatalogPage() {
   return (
     <section className="page-section">
       <div className="section-heading">
-        <p className="eyebrow">Catalogo</p>
+        <p className="eyebrow">Catálogo</p>
         <h1>Pares disponibles y recientes</h1>
         <p className="section-intro">
           Explora el inventario actual. Cada listing abre con fotos, sizes y contacto directo por
@@ -41,7 +41,7 @@ export function CatalogPage() {
         </p>
       </div>
 
-      <div className="catalog-toolbar" aria-label="Filtros del catalogo">
+      <div className="catalog-toolbar" aria-label="Filtros del catálogo">
         <label className="search-field">
           <span>Buscar</span>
           <input
@@ -82,7 +82,7 @@ export function CatalogPage() {
 
       {isLoading ? (
         <div className="empty-state">
-          <p>Cargando catalogo.</p>
+          <p>Cargando catálogo.</p>
         </div>
       ) : null}
 

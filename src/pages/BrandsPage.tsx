@@ -11,7 +11,7 @@ export function BrandsPage() {
         <p className="eyebrow">Marcas</p>
         <h1>Curado para rotaciones premium</h1>
         <p className="section-intro">
-          Esta base queda lista para crecer con mas marcas, filtros y listings conectados a Supabase
+          Esta base queda lista para crecer con más marcas, filtros y listings conectados a Supabase
           cuando llegue el admin panel.
         </p>
       </div>

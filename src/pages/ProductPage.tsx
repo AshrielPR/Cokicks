@@ -39,7 +39,7 @@ export function ProductPage() {
   if (isLoading) {
     return (
       <section className="page-section compact-page">
-        <p className="eyebrow">Catalogo</p>
+        <p className="eyebrow">Catálogo</p>
         <h1>Cargando listing.</h1>
       </section>
     );
@@ -49,9 +49,9 @@ export function ProductPage() {
     return (
       <section className="page-section compact-page">
         <p className="eyebrow">No encontrado</p>
-        <h1>Este listing no esta disponible.</h1>
+        <h1>Este listing no está disponible.</h1>
         <Link className="secondary-action" to="/catalogo">
-          Volver al catalogo
+          Volver al catálogo
         </Link>
       </section>
     );
@@ -142,7 +142,7 @@ function ProductDetails({ product }: { product: Product }) {
     <section className="product-detail">
       <script type="application/ld+json">{structuredData}</script>
       <Link className="back-link" to="/catalogo">
-        Volver al catalogo
+        Volver al catálogo
       </Link>
 
       <div className="product-gallery">

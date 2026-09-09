@@ -17,10 +17,10 @@ export function HomePage() {
           <img className="hero-logo" src={assets.logo} alt={business.name} />
           <p className="eyebrow">Puerto Rico sneaker catalog</p>
           <h1>{business.name}</h1>
-          <p>Pares curados con estetica premium, listos para ver detalles y cerrar por WhatsApp.</p>
+          <p>Pares curados con estética premium, listos para ver detalles y cerrar por WhatsApp.</p>
           <div className="hero-actions">
             <Link className="primary-action" to="/catalogo">
-              Ver catalogo
+              Ver catálogo
             </Link>
             <a
               className="secondary-action"
@@ -40,15 +40,15 @@ export function HomePage() {
           <h2>Ves el par. Abres el listing. Escribes por WhatsApp.</h2>
         </div>
         <p>
-          CoKicks no usa carrito ni checkout. El catalogo existe para enseñar inventario con
-          claridad y mover la conversacion directo a venta.
+          CoKicks no usa carrito ni checkout. El catálogo existe para enseñar inventario con
+          claridad y mover la conversación directo a venta.
         </p>
       </section>
 
       <section className="section-block">
         <div className="section-heading">
           <p className="eyebrow">Nuevos pares</p>
-          <h2>Ultimos añadidos</h2>
+          <h2>Últimos añadidos</h2>
         </div>
         <div className="product-grid">
           {latestProducts.map((product) => (

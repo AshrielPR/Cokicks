@@ -42,7 +42,7 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
     try {
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(savedSlugs));
     } catch {
-      // Guardados sigue funcionando durante la sesion si el navegador bloquea storage.
+      // Guardados sigue funcionando durante la sesión si el navegador bloquea storage.
     }
   }, [savedSlugs]);
 

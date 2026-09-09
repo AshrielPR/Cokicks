@@ -6,7 +6,7 @@ export function Footer() {
     <footer className="site-footer">
       <div>
         <strong>{business.name}</strong>
-        <p>Catalogo premium de sneakers. {business.location}.</p>
+        <p>Catálogo premium de sneakers. {business.location}.</p>
       </div>
       <div className="footer-links">
         <a href={business.instagramUrl} target="_blank" rel="noreferrer">

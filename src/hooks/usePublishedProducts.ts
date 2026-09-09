@@ -27,7 +27,7 @@ export function usePublishedProducts() {
       .catch(() => {
         if (isMounted) {
           setState({
-            error: "No se pudo cargar el catalogo. Intenta de nuevo pronto.",
+            error: "No se pudo cargar el catálogo. Intenta de nuevo pronto.",
             isLoading: false,
             products: [],
           });

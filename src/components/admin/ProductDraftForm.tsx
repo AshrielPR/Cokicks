@@ -224,7 +224,7 @@ export function ProductDraftForm({ listing, onCancel, onSaved }: ProductDraftFor
     event.preventDefault();
 
     if (!supabase) {
-      setMessage("Supabase no esta configurado.");
+      setMessage("Supabase no está configurado.");
       return;
     }
 
@@ -411,9 +411,9 @@ export function ProductDraftForm({ listing, onCancel, onSaved }: ProductDraftFor
         />
       </label>
       <label className="admin-wide">
-        <span>Descripcion</span>
+        <span>Descripción</span>
         <textarea
-          placeholder="Descripcion corta del par"
+          placeholder="Descripción corta del par"
           value={draft.description}
           onChange={(event) => setDraft({ ...draft, description: event.target.value })}
         />
@@ -424,7 +424,7 @@ export function ProductDraftForm({ listing, onCancel, onSaved }: ProductDraftFor
           type="checkbox"
           onChange={(event) => setDraft({ ...draft, isPublished: event.target.checked })}
         />
-        <span>Visible en catalogo</span>
+        <span>Visible en catálogo</span>
       </label>
       {message ? <p className="admin-message">{message}</p> : null}
       <div className="admin-wide admin-actions">

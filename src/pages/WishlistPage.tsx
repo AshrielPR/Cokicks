@@ -12,7 +12,7 @@ export function WishlistPage() {
   return (
     <section className="page-section wishlist-page">
       <div className="section-heading">
-        <p className="eyebrow">Tu seleccion</p>
+        <p className="eyebrow">Tu selección</p>
         <h1>Guardados</h1>
         <p className="section-intro">Tus pares guardados permanecen solamente en este navegador.</p>
       </div>
@@ -31,18 +31,18 @@ export function WishlistPage() {
 
       {!isLoading && !error && savedSlugs.length === 0 ? (
         <div className="empty-state">
-          <p>Aun no has guardado ningun par.</p>
+          <p>Aún no has guardado ningún par.</p>
           <Link className="secondary-action" to="/catalogo">
-            Ver catalogo
+            Ver catálogo
           </Link>
         </div>
       ) : null}
 
       {!isLoading && !error && savedSlugs.length > 0 && savedProducts.length === 0 ? (
         <div className="empty-state">
-          <p>Los pares guardados ya no aparecen en el catalogo.</p>
+          <p>Los pares guardados ya no aparecen en el catálogo.</p>
           <Link className="secondary-action" to="/catalogo">
-            Ver catalogo
+            Ver catálogo
           </Link>
         </div>
       ) : null}

@@ -19,7 +19,7 @@ export function ContactPage() {
           <strong>{business.whatsappDisplay}</strong>
           <a
             className="primary-action full-width"
-            href={getWhatsappUrl("Hola, quiero informacion de CoKicks.")}
+            href={getWhatsappUrl("Hola, quiero información de CoKicks.")}
             target="_blank"
             rel="noreferrer"
           >

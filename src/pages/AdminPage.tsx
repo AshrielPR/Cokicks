@@ -101,7 +101,7 @@ export function AdminPage() {
     setMessage(
       error
         ? "No se pudo solicitar acceso."
-        : "Si el correo esta autorizado, recibira un enlace de acceso.",
+        : "Si el correo está autorizado, recibirá un enlace de acceso.",
     );
   }
 
@@ -126,7 +126,7 @@ export function AdminPage() {
   async function deleteListing(listing: ManagedProduct) {
     if (
       !supabase ||
-      !window.confirm(`Eliminar ${listing.name}? Esta accion no se puede deshacer.`)
+      !window.confirm(`¿Eliminar ${listing.name}? Esta acción no se puede deshacer.`)
     ) {
       return;
     }
@@ -168,7 +168,7 @@ export function AdminPage() {
     return (
       <section className="page-section compact-page">
         <p className="eyebrow">Admin</p>
-        <h1>Supabase no esta configurado.</h1>
+        <h1>Supabase no está configurado.</h1>
         <p>Esta area solo se activa con variables de entorno, Auth y Row Level Security.</p>
       </section>
     );
@@ -210,7 +210,7 @@ export function AdminPage() {
         <p className="eyebrow">Admin</p>
         <h1>Listings</h1>
         <p className="section-intro">
-          Crea y administra el catalogo. Solo los listings visibles aparecen para clientes.
+          Crea y administra el catálogo. Solo los listings visibles aparecen para clientes.
         </p>
       </div>
 
@@ -227,7 +227,7 @@ export function AdminPage() {
           Nuevo listing
         </button>
         <button className="secondary-action" type="button" onClick={signOut}>
-          Cerrar sesion
+          Cerrar sesión
         </button>
       </div>
 
@@ -264,7 +264,7 @@ export function AdminPage() {
                 <h3>{listing.name}</h3>
                 <p>{formatPrice(Number(listing.price))}</p>
                 <small>
-                  {listing.is_published ? "Visible en catalogo" : "Oculto del catalogo"}
+                  {listing.is_published ? "Visible en catálogo" : "Oculto del catálogo"}
                 </small>
               </div>
               <div className="admin-listing-actions">
@@ -296,7 +296,7 @@ export function AdminPage() {
 
         {!isListingsLoading && listings.length === 0 ? (
           <div className="empty-state">
-            <p>Aun no has creado listings.</p>
+            <p>Aún no has creado listings.</p>
           </div>
         ) : null}
       </section>

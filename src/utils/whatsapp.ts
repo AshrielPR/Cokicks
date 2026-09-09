@@ -5,6 +5,6 @@ export function getProductWhatsappUrl(productName: string) {
   return `https://wa.me/${business.whatsappNumber}?text=${encodeURIComponent(message)}`;
 }
 
-export function getWhatsappUrl(message = "Hola, quiero informacion de CoKicks.") {
+export function getWhatsappUrl(message = "Hola, quiero información de CoKicks.") {
   return `https://wa.me/${business.whatsappNumber}?text=${encodeURIComponent(message)}`;
 }
