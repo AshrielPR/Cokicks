@@ -17,15 +17,17 @@ export function HomePage() {
           <img className="hero-logo" src={assets.logo} alt={business.name} />
           <p className="eyebrow">Puerto Rico sneaker catalog</p>
           <h1>{business.name}</h1>
-          <p>
-            Pares curados con estetica premium, listos para ver detalles y
-            cerrar por WhatsApp.
-          </p>
+          <p>Pares curados con estetica premium, listos para ver detalles y cerrar por WhatsApp.</p>
           <div className="hero-actions">
             <Link className="primary-action" to="/catalogo">
               Ver catalogo
             </Link>
-            <a className="secondary-action" href={business.instagramUrl} target="_blank" rel="noreferrer">
+            <a
+              className="secondary-action"
+              href={business.instagramUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
               Instagram
             </a>
           </div>
@@ -38,8 +40,8 @@ export function HomePage() {
           <h2>Ves el par. Abres el listing. Escribes por WhatsApp.</h2>
         </div>
         <p>
-          CoKicks no usa carrito ni checkout. El catalogo existe para enseñar
-          inventario con claridad y mover la conversacion directo a venta.
+          CoKicks no usa carrito ni checkout. El catalogo existe para enseñar inventario con
+          claridad y mover la conversacion directo a venta.
         </p>
       </section>
 
@@ -62,7 +64,6 @@ export function HomePage() {
       <section className="section-block brand-preview">
         <div className="section-heading">
           <p className="eyebrow">Marcas</p>
-          <h2>Desde classics hasta designer pairs</h2>
         </div>
         <div className="brand-strip">
           {brands.slice(0, 9).map((brand) => (

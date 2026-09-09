@@ -8,8 +8,8 @@ export function ContactPage() {
         <p className="eyebrow">Contacto</p>
         <h1>Hablemos del par que tienes en mente.</h1>
         <p className="section-intro">
-          La venta se coordina directo por WhatsApp o Instagram. Envia el
-          listing, size y cualquier pregunta sobre disponibilidad.
+          La venta se coordina directo por WhatsApp o Instagram. Envia el listing, size y cualquier
+          pregunta sobre disponibilidad.
         </p>
       </div>
 

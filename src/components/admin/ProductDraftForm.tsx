@@ -127,7 +127,9 @@ export function ProductDraftForm({ listing, onCancel, onSaved }: ProductDraftFor
   function makeCover(id: string) {
     setImages((currentImages) => {
       const selected = currentImages.find((image) => image.id === id);
-      return selected ? [selected, ...currentImages.filter((image) => image.id !== id)] : currentImages;
+      return selected
+        ? [selected, ...currentImages.filter((image) => image.id !== id)]
+        : currentImages;
     });
   }
 
@@ -267,7 +269,10 @@ export function ProductDraftForm({ listing, onCancel, onSaved }: ProductDraftFor
       }
 
       const existingUrls = images
-        .filter((image): image is Extract<ProductImage, { kind: "existing" }> => image.kind === "existing")
+        .filter(
+          (image): image is Extract<ProductImage, { kind: "existing" }> =>
+            image.kind === "existing",
+        )
         .map((image) => image.url);
       const removedPaths = (listing?.images ?? [])
         .filter((image) => !existingUrls.includes(image))
@@ -286,7 +291,7 @@ export function ProductDraftForm({ listing, onCancel, onSaved }: ProductDraftFor
         resetForm();
         onSaved();
       }
-    } catch (error) {
+    } catch {
       const uploadedPaths = uploadedImages
         .map(getProductImagePath)
         .filter((path): path is string => Boolean(path));
@@ -366,7 +371,11 @@ export function ProductDraftForm({ listing, onCancel, onSaved }: ProductDraftFor
                       Portada
                     </button>
                   ) : null}
-                  <button disabled={index === 0} type="button" onClick={() => moveImage(image.id, -1)}>
+                  <button
+                    disabled={index === 0}
+                    type="button"
+                    onClick={() => moveImage(image.id, -1)}
+                  >
                     Anterior
                   </button>
                   <button
@@ -376,7 +385,11 @@ export function ProductDraftForm({ listing, onCancel, onSaved }: ProductDraftFor
                   >
                     Siguiente
                   </button>
-                  <button className="image-remove" type="button" onClick={() => removeImage(image.id)}>
+                  <button
+                    className="image-remove"
+                    type="button"
+                    onClick={() => removeImage(image.id)}
+                  >
                     Quitar
                   </button>
                 </div>

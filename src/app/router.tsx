@@ -8,6 +8,7 @@ import { BrandsPage } from "../pages/BrandsPage";
 import { NotFoundPage } from "../pages/NotFoundPage";
 import { PoliciesPage } from "../pages/PoliciesPage";
 import { ProductPage } from "../pages/ProductPage";
+import { WishlistPage } from "../pages/WishlistPage";
 
 const AdminPage = lazy(() =>
   import("../pages/AdminPage").then((module) => ({ default: module.AdminPage })),
@@ -18,23 +19,24 @@ const publicRoutes = [
   { path: "catalogo", element: <CatalogPage /> },
   { path: "marcas", element: <BrandsPage /> },
   { path: "producto/:slug", element: <ProductPage /> },
+  { path: "guardados", element: <WishlistPage /> },
   { path: "politicas", element: <PoliciesPage /> },
   { path: "contacto", element: <ContactPage /> },
 ];
 
-const developmentRoutes = import.meta.env.DEV
-  || import.meta.env.VITE_ENABLE_ADMIN === "true"
-  ? [
-      {
-        path: "admin",
-        element: (
-          <Suspense fallback={<section className="page-section compact-page">Cargando</section>}>
-            <AdminPage />
-          </Suspense>
-        ),
-      },
-    ]
-  : [];
+const developmentRoutes =
+  import.meta.env.DEV || import.meta.env.VITE_ENABLE_ADMIN === "true"
+    ? [
+        {
+          path: "admin",
+          element: (
+            <Suspense fallback={<section className="page-section compact-page">Cargando</section>}>
+              <AdminPage />
+            </Suspense>
+          ),
+        },
+      ]
+    : [];
 
 export const router = createBrowserRouter(
   [

@@ -124,7 +124,10 @@ export function AdminPage() {
   }
 
   async function deleteListing(listing: ManagedProduct) {
-    if (!supabase || !window.confirm(`Eliminar ${listing.name}? Esta accion no se puede deshacer.`)) {
+    if (
+      !supabase ||
+      !window.confirm(`Eliminar ${listing.name}? Esta accion no se puede deshacer.`)
+    ) {
       return;
     }
 
@@ -166,10 +169,7 @@ export function AdminPage() {
       <section className="page-section compact-page">
         <p className="eyebrow">Admin</p>
         <h1>Supabase no esta configurado.</h1>
-        <p>
-          Esta area solo se activa con variables de entorno, Auth y Row Level
-          Security.
-        </p>
+        <p>Esta area solo se activa con variables de entorno, Auth y Row Level Security.</p>
       </section>
     );
   }
@@ -210,16 +210,15 @@ export function AdminPage() {
         <p className="eyebrow">Admin</p>
         <h1>Listings</h1>
         <p className="section-intro">
-          Crea y administra el catalogo. Solo los listings visibles aparecen para
-          clientes.
+          Crea y administra el catalogo. Solo los listings visibles aparecen para clientes.
         </p>
       </div>
 
       <div className="security-note">
         <strong>Modo seguro</strong>
         <p>
-          Solo cuentas autorizadas pueden crear, editar, ocultar o eliminar datos.
-          La escritura publica permanece bloqueada por las reglas de Supabase.
+          Solo cuentas autorizadas pueden crear, editar, ocultar o eliminar datos. La escritura
+          publica permanece bloqueada por las reglas de Supabase.
         </p>
       </div>
 
@@ -264,10 +263,16 @@ export function AdminPage() {
                 <span>{listing.brand}</span>
                 <h3>{listing.name}</h3>
                 <p>{formatPrice(Number(listing.price))}</p>
-                <small>{listing.is_published ? "Visible en catalogo" : "Oculto del catalogo"}</small>
+                <small>
+                  {listing.is_published ? "Visible en catalogo" : "Oculto del catalogo"}
+                </small>
               </div>
               <div className="admin-listing-actions">
-                <button className="secondary-action" type="button" onClick={() => setEditor(listing)}>
+                <button
+                  className="secondary-action"
+                  type="button"
+                  onClick={() => setEditor(listing)}
+                >
                   Editar
                 </button>
                 <button
@@ -290,7 +295,9 @@ export function AdminPage() {
         </div>
 
         {!isListingsLoading && listings.length === 0 ? (
-          <div className="empty-state"><p>Aun no has creado listings.</p></div>
+          <div className="empty-state">
+            <p>Aun no has creado listings.</p>
+          </div>
         ) : null}
       </section>
     </section>

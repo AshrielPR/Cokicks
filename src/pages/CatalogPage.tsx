@@ -36,8 +36,8 @@ export function CatalogPage() {
         <p className="eyebrow">Catalogo</p>
         <h1>Pares disponibles y recientes</h1>
         <p className="section-intro">
-          Explora el inventario actual. Cada listing abre con fotos, sizes y
-          contacto directo por WhatsApp.
+          Explora el inventario actual. Cada listing abre con fotos, sizes y contacto directo por
+          WhatsApp.
         </p>
       </div>
 
@@ -67,7 +67,6 @@ export function CatalogPage() {
             ))}
           </div>
         </div>
-
       </div>
 
       <div className="catalog-meta">
@@ -81,9 +80,17 @@ export function CatalogPage() {
         ))}
       </div>
 
-      {isLoading ? <div className="empty-state"><p>Cargando catalogo.</p></div> : null}
+      {isLoading ? (
+        <div className="empty-state">
+          <p>Cargando catalogo.</p>
+        </div>
+      ) : null}
 
-      {error ? <div className="empty-state"><p>{error}</p></div> : null}
+      {error ? (
+        <div className="empty-state">
+          <p>{error}</p>
+        </div>
+      ) : null}
 
       {!isLoading && !error && filteredProducts.length === 0 ? (
         <div className="empty-state">

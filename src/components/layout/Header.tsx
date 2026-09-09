@@ -2,6 +2,7 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { assets } from "../../config/assets";
 import { business } from "../../config/business";
+import { useWishlist } from "../../context/WishlistContext";
 
 const navItems = [
   { label: "Inicio", to: "/" },
@@ -13,6 +14,7 @@ const navItems = [
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const { savedSlugs } = useWishlist();
 
   return (
     <header className="site-header">
@@ -39,6 +41,9 @@ export function Header() {
             {item.label}
           </NavLink>
         ))}
+        <NavLink to="/guardados" onClick={() => setIsOpen(false)}>
+          Guardados{savedSlugs.length > 0 ? ` (${savedSlugs.length})` : ""}
+        </NavLink>
         <a
           href={business.instagramUrl}
           target="_blank"

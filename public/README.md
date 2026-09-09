@@ -27,7 +27,7 @@ public/products/
 Luego usa rutas como:
 
 ```ts
-"/products/jordan-4-bred-1.jpg"
+"/products/jordan-4-bred-1.jpg";
 ```
 
 ## Hero
