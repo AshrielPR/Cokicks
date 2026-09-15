@@ -33,7 +33,7 @@ jobs:
       - name: Verify and build
         run: npm run check
         env:
-          VITE_BASE_PATH: /Cokicks/
+          VITE_BASE_PATH: /
           # These values become part of the public frontend bundle. Never put a
           # Supabase service_role key or any other private secret here.
           VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
