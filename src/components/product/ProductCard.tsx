@@ -18,30 +18,72 @@ type ProductCardProps = {
 
 export function ProductCard({ product, rotateImages = false }: ProductCardProps) {
   const [imageIndex, setImageIndex] = useState(0);
+  const [incomingIndex, setIncomingIndex] = useState<number | null>(null);
+  const [isSliding, setIsSliding] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const imageSignature = product.images.join("|");
-  const currentImage = product.images[imageIndex] ?? product.images[0];
 
   useEffect(() => {
     setImageIndex(0);
+    setIncomingIndex(null);
+    setIsSliding(false);
   }, [product.id, imageSignature]);
 
   useEffect(() => {
-    if (!rotateImages || isPaused || product.images.length < 2) {
+    if (
+      !rotateImages ||
+      isPaused ||
+      incomingIndex !== null ||
+      product.images.length < 2 ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
       return;
     }
 
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (reducedMotion.matches) {
-      return;
-    }
+    const nextIndex = (imageIndex + 1) % product.images.length;
+    let nextImage: HTMLImageElement | null = null;
+    const showNextImage = () => setIncomingIndex(nextIndex);
+    const timer = window.setTimeout(() => {
+      nextImage = new Image();
+      nextImage.addEventListener("load", showNextImage, { once: true });
+      nextImage.src = product.images[nextIndex];
 
-    const timer = window.setInterval(() => {
-      setImageIndex((currentIndex) => (currentIndex + 1) % product.images.length);
+      if (nextImage.complete) {
+        showNextImage();
+      }
     }, 3800);
 
-    return () => window.clearInterval(timer);
-  }, [isPaused, product.images.length, rotateImages]);
+    return () => {
+      window.clearTimeout(timer);
+      nextImage?.removeEventListener("load", showNextImage);
+    };
+  }, [imageIndex, incomingIndex, isPaused, product.images, rotateImages]);
+
+  useEffect(() => {
+    if (incomingIndex === null) {
+      return;
+    }
+
+    let secondFrame = 0;
+    const firstFrame = window.requestAnimationFrame(() => {
+      secondFrame = window.requestAnimationFrame(() => setIsSliding(true));
+    });
+
+    return () => {
+      window.cancelAnimationFrame(firstFrame);
+      window.cancelAnimationFrame(secondFrame);
+    };
+  }, [incomingIndex]);
+
+  function finishSlide() {
+    if (!isSliding || incomingIndex === null) {
+      return;
+    }
+
+    setImageIndex(incomingIndex);
+    setIncomingIndex(null);
+    setIsSliding(false);
+  }
 
   return (
     <article
@@ -53,13 +95,25 @@ export function ProductCard({ product, rotateImages = false }: ProductCardProps)
     >
       <Link className="product-card-link" to={`/producto/${product.slug}`}>
         <div className="product-card-media">
-          <img
-            className={rotateImages ? "product-card-image is-rotating" : "product-card-image"}
-            key={currentImage}
-            src={currentImage}
-            alt={product.name}
-            loading="lazy"
-          />
+          <div
+            className={`product-card-image-track${isSliding ? " is-sliding" : ""}`}
+            onTransitionEnd={finishSlide}
+          >
+            <img
+              className="product-card-image"
+              src={product.images[imageIndex]}
+              alt={product.name}
+              loading="lazy"
+            />
+            {incomingIndex !== null ? (
+              <img
+                className="product-card-image"
+                src={product.images[incomingIndex]}
+                alt=""
+                aria-hidden="true"
+              />
+            ) : null}
+          </div>
           {isNewProduct(product.addedAt) ? <span className="new-badge">Nuevo</span> : null}
         </div>
         <div className="product-card-copy">
